@@ -2,6 +2,7 @@ from django.db import models
 from fontawesome_5.fields import IconField
 from ckeditor.fields import RichTextField
 from image_cropping import ImageRatioField
+from cloudinary import models as cl_models
 
 
 class Ingredient(models.Model):
@@ -18,8 +19,8 @@ class Recipe(models.Model):
     title = models.TextField(name="title")
     steps = RichTextField(name="steps")
     icon = IconField(default="seedling")
-    image = models.ImageField(upload_to="recipe", name="image")
-    cropping = ImageRatioField('image', '500x150') 
+    image = cl_models.CloudinaryField(name="image")
+    cropping = ImageRatioField('image', '1000x200') 
 
     VEGAN = 1
     VEGETARIAN = 2

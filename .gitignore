@@ -4,3 +4,4 @@ __pycache__
 static_root
 media_root
 *.dump
+.env
