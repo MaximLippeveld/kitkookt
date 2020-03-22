@@ -1,5 +1,6 @@
 from django.db import models
 from fontawesome_5.fields import IconField
+from ckeditor.fields import RichTextField
 
 
 class Ingredient(models.Model):
@@ -14,8 +15,9 @@ class Recipe(models.Model):
     url_title = models.CharField(max_length=100)
     intro = models.TextField(name="intro")
     title = models.TextField(name="title")
-    steps = models.TextField(name="steps")
-    icon = IconField(default="seedling") 
+    steps = RichTextField(name="steps")
+    icon = IconField(default="seedling")
+    image = models.ImageField(upload_to="recipe", name="image") 
 
     VEGAN = 1
     VEGETARIAN = 2

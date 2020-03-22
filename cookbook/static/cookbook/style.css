@@ -26,6 +26,11 @@ h3 span.vegan i {
     color: green;
 }
 
+img {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
 .ingredients table thead th {
     border-top: 0;
     border-bottom: 2px dotted #dee2e6;
