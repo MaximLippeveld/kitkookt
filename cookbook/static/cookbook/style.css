@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab&display=swap');
+
+body {
+    font-family: 'Montserrat', serif;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+    margin: 1em 2em;
+    padding: 1em 0em;
+    border-bottom: 3px dotted black;
+}
+h1, h3 {
+    font-family: 'Roboto Slab', serif;
+}
+
+h3 span.diet {
+    color: #999;
+}
+
+h3 span.veggie i {
+    color: 
+}
+h3 span.vegan i {
+    color: green;
+}
+
+.ingredients table thead th {
+    border-top: 0;
+    border-bottom: 2px dotted #dee2e6;
+}
+.ingredients table tbody td {
+    border-top: 1px dotted #dee2e6;
+}
+
+.instructions p {
+    margin-left: 1em;
+}
