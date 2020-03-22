@@ -1,6 +1,7 @@
 from django.db import models
 from fontawesome_5.fields import IconField
 from ckeditor.fields import RichTextField
+from image_cropping import ImageRatioField
 
 
 class Ingredient(models.Model):
@@ -17,7 +18,8 @@ class Recipe(models.Model):
     title = models.TextField(name="title")
     steps = RichTextField(name="steps")
     icon = IconField(default="seedling")
-    image = models.ImageField(upload_to="recipe", name="image") 
+    image = models.ImageField(upload_to="recipe", name="image")
+    cropping = ImageRatioField('image', '500x150') 
 
     VEGAN = 1
     VEGETARIAN = 2

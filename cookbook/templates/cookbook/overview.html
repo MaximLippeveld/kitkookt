@@ -1,0 +1,36 @@
+{% load bootstrap4 %}
+{% load fontawesome_5 %}
+{% load static %}
+{% load cropping %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        {% fontawesome_5_static %} 
+        {% bootstrap_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'cookbook/style.css' %}">
+        <title>Kit Kookt</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body>
+        <div class="container overview">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h1>Kit Kookt</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {% for recipe in recipes %}
+                        <a href="{% url 'cookbook:recipe' recipe.url_title %}">
+                            <img src="{{ recipe.header_url }}" />
+                            <h4><span class="diet">{{ recipe.diet }}</span> <span class="{{ recipe.icon_class }}">{{ recipe.icon.as_html }}</span> {{ recipe.title }}</h4>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+    </head>
+</html>

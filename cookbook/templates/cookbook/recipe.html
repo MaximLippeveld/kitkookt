@@ -1,6 +1,7 @@
 {% load bootstrap4 %}
 {% load fontawesome_5 %}
 {% load static %}
+{% load cropping %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body>
-        <div class="container">
+        <div class="container recipe">
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <h1>Kit Kookt</h1>
@@ -22,12 +23,16 @@
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col">
-                            <img src="{{ image.url }}" />
+                            <h3><span class="diet">{{ diet }}</span> <span class="{{ icon_class }}">{{ icon.as_html }}</span> {{ title }}</h3>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h3><span class="diet">{{ diet }}</span> <span class="{{ icon_class }}">{{ icon.as_html }}</span> {{ title }}</h3>
+                            <img src="{{ header_url }}" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <p>{{ intro }}</p>
                         </div>
                     </div>
