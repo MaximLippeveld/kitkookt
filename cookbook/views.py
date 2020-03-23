@@ -2,8 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from image_cropping.utils import get_backend
+import urllib.request
+from django.conf import settings
+import os
 
 from .models import Recipe
+
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 
 def recipe_to_context(recipe):
@@ -15,8 +21,13 @@ def recipe_to_context(recipe):
     ]
     context["icon_class"] = recipe.get_diet_display().lower()
 
+    img_new = os.path.join(settings.MEDIA_ROOT, "recipe", os.path.basename(recipe.image.url))
+    if not os.path.exists(img_new):
+        with open(img_new, "wb") as f:
+            f.write(urllib.request.urlopen(recipe.image.url).read())
+
     context["header_url"] = get_backend().get_thumbnail_url(
-        recipe.image,
+        img_new,
         {
             'size': (1000, 200),
             'box': recipe.cropping,
