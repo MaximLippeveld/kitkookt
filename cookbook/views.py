@@ -8,8 +8,8 @@ import os
 
 from .models import Recipe
 
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 
 def recipe_to_context(recipe):
@@ -21,10 +21,9 @@ def recipe_to_context(recipe):
     ]
     context["icon_class"] = recipe.get_diet_display().lower()
 
-    img_new = os.path.join(settings.MEDIA_ROOT, "recipe", os.path.basename(recipe.image.url))
-    if not os.path.exists(img_new):
-        with open(img_new, "wb") as f:
-            f.write(urllib.request.urlopen(recipe.image.url).read())
+    img_new = os.path.join("recipe", os.path.basename(recipe.image.url))
+    if not default_storage.exists(img_new):
+        default_storage.save(img_new, ContentFile(urllib.request.urlopen(recipe.image.url).read()))
 
     context["header_url"] = get_backend().get_thumbnail_url(
         img_new,
