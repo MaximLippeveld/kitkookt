@@ -28,6 +28,7 @@ class Recipe(models.Model):
     icon = IconField(default="seedling")
     image = cl_models.CloudinaryField(name="image")
     cropping = ImageRatioField('image', '1000x200') 
+    published = models.BooleanField(name='published', default=False) 
 
     VEGAN = 1
     VEGETARIAN = 2

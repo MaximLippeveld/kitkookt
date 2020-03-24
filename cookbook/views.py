@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.forms.models import model_to_dict
 from image_cropping.utils import get_backend
 import urllib.request
@@ -43,7 +43,7 @@ def recipe_to_context(recipe):
 
 
 def overview(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(published=True)
 
     context = {"recipes": [recipe_to_context(recipe) for recipe in recipes]}
 
@@ -54,8 +54,12 @@ def recipe(request, url_title):
     recipe = Recipe.objects.get(url_title__iexact=url_title)
     context = recipe_to_context(recipe)
 
-    return render(
-        request,
-        "cookbook/recipe.html",
-        context
-    )
+    if recipe.published:
+        return render(
+            request,
+            "cookbook/recipe.html",
+            context
+        )
+    else:
+        return HttpResponseNotFound()
+
