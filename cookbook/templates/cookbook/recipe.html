@@ -44,16 +44,17 @@
                             <p>{{ intro }}</p>
                         </div>
                     </div>
+                    {% for ingredientlist in ingredientlists %}
                     <div class="row ingredients">
                         <div class="col-md-8">
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th colspan=2 scope="col">Ingrediënten</th>
+                                        <th colspan=2 scope="col">Ingrediënten | {{ ingredientlist.name }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {% for ingredient in ingredients %}
+                                {% for ingredient in ingredientlist.ingredients %}
                                     <tr>
                                         <td>{{ingredient.name}}</td>
                                         <td>{{ingredient.quantity }}</td>
@@ -63,6 +64,7 @@
                             </table>
                         </div>
                     </div>
+                    {% endfor %}
                     <div class="row instructions">
                         <div class="col">
                             <strong>Instructies</strong>

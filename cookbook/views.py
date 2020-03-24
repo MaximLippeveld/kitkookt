@@ -15,10 +15,14 @@ from django.core.files.storage import default_storage
 def recipe_to_context(recipe):
     context = model_to_dict(recipe)
     context["diet"] = recipe.get_diet_display()
-    context["ingredients"] = [
-        model_to_dict(ingredient)
-        for ingredient in recipe.ingredients.all()
-    ]
+
+    ingredientlists = []
+    for ingredientlist in recipe.ingredientlists.all():
+        ilc = model_to_dict(ingredientlist)
+        ilc["ingredients"] = [model_to_dict(ingredient) for ingredient in ingredientlist.ingredients.all()]
+        ingredientlists.append(ilc)
+
+    context["ingredientlists"] = ingredientlists
     context["icon_class"] = recipe.get_diet_display().lower()
 
     img_new = os.path.join("recipe", os.path.basename(recipe.image.url))
