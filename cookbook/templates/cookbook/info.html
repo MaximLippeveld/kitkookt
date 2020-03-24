@@ -1,7 +1,6 @@
 {% load bootstrap4 %}
 {% load fontawesome_5 %}
 {% load static %}
-{% load cropping %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,9 +8,8 @@
         {% fontawesome_5_static %} 
         {% bootstrap_css %}
         <link rel="stylesheet" type="text/css" href="{% static 'cookbook/style.css' %}">
-        <title>Kit Kookt | Recepten</title>
+        <title>Kit Kookt | Info</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161600221-1"></script>
         <script>
@@ -22,7 +20,7 @@
         </script>
     </head>
     <body>
-        <div class="container overview">
+        <div class="container recipe">
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <h1>Kit Kookt</h1>
@@ -30,12 +28,16 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    {% for recipe in recipes %}
-                        <a href="{% url 'cookbook:recipe' recipe.url_title %}">
-                            <img src="{{ recipe.header_url }}" />
-                            <h4><span class="diet">{{ recipe.diet }}</span> <span class="{{ recipe.icon_class }}">{{ recipe.icon.as_html }}</span> {{ recipe.title }}</h4>
-                        </a>
-                    {% endfor %}
+                    <p>
+                        Voor mijn gerechtjes haal ik veel inspiratie uit Amerikaanse bronnen. Hun metingen zijn anders dan die van ons, namelijk in cups. 
+                        Ik heb mijzelf ook cups aangeschaft waardoor je in veel van mijn recepten deze metingen zal terugvinden. 
+                        Niet iedereen heeft dit in zijn/haar keuken, dus heb ik hier onder een tabelletje staan met de juiste omzettingen naar gram en ml. 
+                        (bron tabel: Libelle Lekker)
+                    </p>
+                    <p>
+                        Cups zijn erg handig om in huis te hebben! Als je even googelt naar 'maatcups' of 'maatschepjes' vind je een groot aanbod.
+                    </p>
+                    <img src="{% static 'cookbook/cupsnaargrammen.png' %}" />
                 </div>
             </div>
         </div>

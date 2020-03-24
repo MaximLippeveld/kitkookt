@@ -42,6 +42,10 @@ def recipe_to_context(recipe):
     return context
 
 
+def info(request):
+    return render(request, "cookbook/info.html")
+
+
 def overview(request):
     recipes = Recipe.objects.filter(published=True)
 
