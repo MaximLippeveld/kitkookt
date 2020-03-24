@@ -1,8 +1,6 @@
 .vscode
 __pycache__
 *.sqlite3
-static_root
-media_root
 *.dump
 .env
 media/
