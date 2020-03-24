@@ -8,7 +8,14 @@ from cloudinary import models as cl_models
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
     quantity = models.CharField(max_length=256)
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="ingredients")
+    ingredientlist = models.ForeignKey("IngredientList", on_delete=models.CASCADE, related_name="ingredients")
+
+    def __str__(self):
+        return self.name
+
+class IngredientList(models.Model):
+    name = models.CharField(max_length=100, name="name")
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE, related_name="ingredientlists")
 
     def __str__(self):
         return self.name
