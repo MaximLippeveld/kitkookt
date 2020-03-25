@@ -32,7 +32,9 @@
                 <div class="col-md-8">
                     {% for recipe in recipes %}
                         <a href="{% url 'cookbook:recipe' recipe.url_title %}">
-                            <img src="{{ recipe.header_url }}" />
+                            {% if recipe.header_url %}
+                                <img src="{{ recipe.header_url }}" />
+                            {% endif %}
                             <h4><span class="diet">{{ recipe.diet }}</span> <span class="{{ recipe.icon_class }}">{{ recipe.icon.as_html }}</span> {{ recipe.title }}</h4>
                         </a>
                     {% endfor %}

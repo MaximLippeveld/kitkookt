@@ -25,19 +25,20 @@ def recipe_to_context(recipe):
     context["ingredientlists"] = ingredientlists
     context["icon_class"] = recipe.get_diet_display().lower()
 
-    img_new = os.path.join("recipe", os.path.basename(recipe.image.url))
-    if not default_storage.exists(img_new):
-        default_storage.save(img_new, ContentFile(urllib.request.urlopen(recipe.image.url).read()))
+    if recipe.image.url is not None:
+        img_new = os.path.join("recipe", os.path.basename(recipe.image.url))
+        if not default_storage.exists(img_new):
+            default_storage.save(img_new, ContentFile(urllib.request.urlopen(recipe.image.url).read()))
 
-    context["header_url"] = get_backend().get_thumbnail_url(
-        img_new,
-        {
-            'size': (1000, 200),
-            'box': recipe.cropping,
-            'crop': True,
-            'detail': True,
-        }
-    )
+        context["header_url"] = get_backend().get_thumbnail_url(
+            img_new,
+            {
+                'size': (1000, 200),
+                'box': recipe.cropping,
+                'crop': True,
+                'detail': True,
+            }
+        )
 
     return context
 

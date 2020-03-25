@@ -34,11 +34,13 @@
                             <h3><span class="diet">{{ diet }}</span> <span class="{{ icon_class }}">{{ icon.as_html }}</span> {{ title }}</h3>
                         </div>
                     </div>
+                    {% if header_url %}
                     <div class="row">
                         <div class="col">
                             <img src="{{ header_url }}" />
                         </div>
                     </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col">
                             <p>{{ intro }}</p>
