@@ -48,7 +48,7 @@ def info(request):
 
 
 def overview(request):
-    recipes = Recipe.objects.filter(published=True)
+    recipes = Recipe.objects.filter(published=True).order_by('date_published')
 
     context = {"recipes": [recipe_to_context(recipe) for recipe in recipes]}
 

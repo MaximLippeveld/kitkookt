@@ -22,13 +22,14 @@ class IngredientList(models.Model):
 
 class Recipe(models.Model):
     url_title = models.CharField(max_length=100)
-    intro = models.TextField(name="intro")
+    intro = RichTextField(name="intro")
     title = models.TextField(name="title")
     steps = RichTextField(name="steps")
     icon = IconField(default="seedling")
     image = cl_models.CloudinaryField(blank=True, name="image")
     cropping = ImageRatioField('image', '1000x200') 
-    published = models.BooleanField(name='published', default=False) 
+    published = models.BooleanField(name='published', default=False)
+    date_published = models.DateTimeField(name="date_published", null=True, blank=True) 
 
     VEGAN = 1
     VEGETARIAN = 2

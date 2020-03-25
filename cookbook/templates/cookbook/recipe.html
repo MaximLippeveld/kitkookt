@@ -43,7 +43,7 @@
                     {% endif %}
                     <div class="row">
                         <div class="col">
-                            <p>{{ intro }}</p>
+                            <p>{{ intro|safe }}</p>
                         </div>
                     </div>
                     {% for ingredientlist in ingredientlists %}
