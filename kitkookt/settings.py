@@ -135,8 +135,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 import cloudinary
 cloudinary.config(
-    cloud_name="hmdzxdtry"
+    cloud_name="kitkookt"
 )
-
-import django_heroku
-django_heroku.settings(locals())
