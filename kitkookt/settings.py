@@ -25,7 +25,7 @@ SECRET_KEY = '&^bpntp2h0y5me-)g7+n5@3e8eodhwx5k&v!asw3d*jdd0f45k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["hi.maximl.be", "kitkookt.be"]
+ALLOWED_HOSTS = ["localhost", "kitkookt.be"]
 
 
 # Application definition
@@ -92,12 +92,8 @@ WSGI_APPLICATION = 'kitkookt.wsgi.application'
 #}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kitkookt',
-        'USER': os.environ["DJANGO_DB_USER"],
-        'PASSWORD': os.environ["DJANGO_DB_PASSWORD"],
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -143,3 +139,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+import cloudinary
+cloudinary.config(
+    cloud_name="kitkookt"
+)
