@@ -1,0 +1,3 @@
+{% for recipe in recipes %}
+    {% include "cookbook/recipe-card.html" with url_title=recipe.url_title header_url=recipe.header_url diet=recipe.diet title=recipe.title icon=recipe.icon icon_class=recipe.icon_class %}
+{% endfor %}

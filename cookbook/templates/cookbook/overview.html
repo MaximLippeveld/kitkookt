@@ -7,9 +7,38 @@
 {% block title %}Recepten{% endblock %}
 
 {% block content %}
-<div class="block">
-    {% for recipe in recipes %}
-        {% include "cookbook/recipe_card.html" with url_title=recipe.url_title header_url=recipe.header_url diet=recipe.diet title=recipe.title icon=recipe.icon icon_class=recipe.icon_class %}
-    {% endfor %}
+<div x-data="overview()">
+    <form @click.away="open = false" @submit.prevent="search()" class="flex flex-nowrap mx-10 mb-10 mt-0 justify-center items-center">
+        <button type="button" @click="open = true" class="flex-grow-0 flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
+        </button>
+        <div x-show="open" class="ml-2 border-b-2 border-solid border-black flex-grow flex-shrink flex flex-nowrap items-center">
+            <input x-model="query" class="p-1 flex-grow flex-shrink">
+            <button type="submit" class="flex-grow-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg>
+            </button>
+        </div>
+    </form>
+    <div id="recipes" class="block">
+        {% include "cookbook/recipe-list.html" %}
+    </div>
 </div>
+<script type="text/javascript">
+function overview() {
+    return {
+        open: false,
+        query: "",
+        search: function() {
+            document.getElementById("recipes").classList.add("opacity-50")
+            fetch("?q="+this.query, {headers: {'Content-Type': 'application/json'}})
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("recipes").innerHTML = data["html_from_view"]
+                    document.getElementById("recipes").classList.remove("opacity-50")
+                });
+        }
+    }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 {% endblock %}

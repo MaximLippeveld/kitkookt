@@ -10,6 +10,8 @@ from .models import Recipe
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 
 def recipe_to_context(recipe):
@@ -39,6 +41,8 @@ def recipe_to_context(recipe):
                 'detail': True,
             }
         )
+    else:
+        context["header_url"] = False
 
     return context
 
@@ -48,9 +52,24 @@ def info(request):
 
 
 def overview(request):
-    recipes = Recipe.objects.filter(published=True).order_by('-date_published')
+
+    query = request.GET.get("q") 
+
+    if query is None:
+        recipes = Recipe.objects.filter(published=True).order_by('-date_published')
+    else:
+        recipes = Recipe.objects.filter(title__icontains=query, published=True).order_by('-date_published')
 
     context = {"recipes": [recipe_to_context(recipe) for recipe in recipes]}
+
+    if request.content_type == 'application/json':    
+        html = render_to_string(
+            template_name="cookbook/recipe-list.html", 
+            context=context
+        )
+
+        data_dict = {"html_from_view": html}
+        return JsonResponse(data=data_dict, safe=False)
 
     return render(request, "cookbook/overview.html", context)
 
@@ -62,7 +81,7 @@ def recipe(request, url_title):
     if recipe.published:
         return render(
             request,
-            "cookbook/recipe_detail.html",
+            "cookbook/recipe-detail.html",
             context
         )
     else:
