@@ -9,12 +9,13 @@
 {% block content %}
 <div x-data="overview()">
     <form @click.away="open = false" @submit.prevent="search()" class="flex flex-nowrap mx-10 mb-10 mt-0 justify-center items-center">
-        <button type="button" @click="open = true" class="flex-grow-0 flex-shrink-0">
+        <button type="button" @click="activate()" class="flex-grow-0 flex-shrink-0 flex flex-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
+            <p class="ml-2 cursor-pointer" x-show="successfullQuery & !open" x-html="'Resultaten voor \''+query+'\''"></p>
         </button>
-        <div x-show="open" class="ml-2 border-b-2 border-solid border-black flex-grow flex-shrink flex flex-nowrap items-center">
-            <input x-model="query" class="p-1 flex-grow flex-shrink">
-            <button type="submit" class="flex-grow-0">
+        <div x-show="open" class="ml-2 flex-grow flex-shrink flex flex-nowrap items-center bg-gray-200">
+            <input id="search" x-model="query" class="bg-transparent p-1 flex-grow flex-shrink">
+            <button type="submit" class="flex-grow-0 mr-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg>
             </button>
         </div>
@@ -29,6 +30,14 @@ function overview() {
         open: false,
         query: "",
         isLoading: false,
+        successfullQuery: false,
+        activate: function() {
+            this.open = true
+            this.$nextTick(() => {
+                document.getElementById("search").focus()
+                document.getElementById("search").select()
+            })
+        },
         search: function() {
             this.isLoading = true
             fetch("?q="+this.query, {headers: {'Content-Type': 'application/json'}})
@@ -37,7 +46,11 @@ function overview() {
                     document.getElementById("recipes").innerHTML = data["html_from_view"]
                     this.isLoading = false
                     this.open = false
-                    this.query = ""
+                    if (this.query == '') {
+                        this.successfullQuery = false
+                    } else {
+                        this.successfullQuery = true
+                    }
                 });
         }
     }
