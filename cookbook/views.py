@@ -62,7 +62,7 @@ def recipe(request, url_title):
     if recipe.published:
         return render(
             request,
-            "cookbook/recipe.html",
+            "cookbook/recipe_detail.html",
             context
         )
     else:
