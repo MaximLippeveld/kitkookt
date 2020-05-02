@@ -19,7 +19,7 @@
             </button>
         </div>
     </form>
-    <div id="recipes" class="block">
+    <div id="recipes" class="block" x-bind:class="{'opacity-50': isLoading}">
         {% include "cookbook/recipe-list.html" %}
     </div>
 </div>
@@ -28,13 +28,16 @@ function overview() {
     return {
         open: false,
         query: "",
+        isLoading: false,
         search: function() {
-            document.getElementById("recipes").classList.add("opacity-50")
+            this.isLoading = true
             fetch("?q="+this.query, {headers: {'Content-Type': 'application/json'}})
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById("recipes").innerHTML = data["html_from_view"]
-                    document.getElementById("recipes").classList.remove("opacity-50")
+                    this.isLoading = false
+                    this.open = false
+                    this.query = ""
                 });
         }
     }
