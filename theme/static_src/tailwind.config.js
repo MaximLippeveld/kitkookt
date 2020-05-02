@@ -223,8 +223,8 @@ module.exports = {
       default: '1',
     },
     fontFamily: {
-      header: ['Roboto Slab'],
-      body: ['Montserrat']
+      serif: ['Roboto Slab'],
+      sans: ['Montserrat']
     },
     fontSize: {
       xs: '0.75rem',

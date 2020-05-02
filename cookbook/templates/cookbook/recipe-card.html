@@ -3,7 +3,7 @@
     {% if header_url %}
         <img src="{{ header_url }}" />
     {% endif %}
-    <p class="leading-snug p-2 text-xl">
+    <p class="font-serif leading-snug p-2 text-xl">
         <span class="text-gray-600">{{ diet }}</span>
         <span class="{% if icon_class == 'veggie' %}text-yellow-500{% else %}text-green-600{% endif %}">{{ icon.as_html }}</span> 
         {{ title }}

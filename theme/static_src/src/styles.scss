@@ -1,6 +1,11 @@
 @tailwind base;
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab&display=swap');
+@font-face {
+    font-family: "Roboto Slab";
+    src: url('../fonts/RobotoSlab-VariableFont_wght.ttf') format('truetype')
+}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
 @tailwind components;
 @tailwind utilities;
