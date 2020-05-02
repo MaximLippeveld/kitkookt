@@ -25,7 +25,7 @@ SECRET_KEY = '&^bpntp2h0y5me-)g7+n5@3e8eodhwx5k&v!asw3d*jdd0f45k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "kitkookt.be"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "kitkookt.be"]
 
 
 # Application definition
@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cookbook',
-    'bootstrap4',
     'fontawesome_5',
     'ckeditor',
     'easy_thumbnails',
     'image_cropping',
+    'tailwind',
+    'theme'
 ]
 
 from easy_thumbnails.conf import Settings as thumbnail_settings
@@ -137,3 +138,5 @@ import cloudinary
 cloudinary.config(
     cloud_name="kitkookt"
 )
+
+TAILWIND_APP_NAME = 'theme'

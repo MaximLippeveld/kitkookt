@@ -1,0 +1,35 @@
+{% load fontawesome_5 %}
+{% load static %}
+{% load cropping %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        {% fontawesome_5_static %}
+        <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" type="text/css" /> 
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'cookbook/style.css' %}"> -->
+        <title>Kit Kookt | {% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161600221-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-161600221-1');
+        </script>
+    </head>
+    <body>
+        <div class="">
+            <div class="">
+                <div class="">
+                    <h1>Kit Kookt</h1>
+                </div>
+            </div>
+            <div class="">
+            {% block content %}(no content){% endblock %}
+            </div>
+        </div>
+    </body>
+</html>

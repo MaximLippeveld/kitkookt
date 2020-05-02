@@ -1,47 +1,22 @@
-{% load bootstrap4 %}
-{% load fontawesome_5 %}
+{% extends "cookbook/base.html" %}
+
 {% load static %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        {% fontawesome_5_static %} 
-        {% bootstrap_css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'cookbook/style.css' %}">
-        <title>Kit Kookt | Info</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161600221-1"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-161600221-1');
-        </script>
-    </head>
-    <body>
-        <div class="container recipe">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <h1>Kit Kookt</h1>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <p>
-                        Voor mijn gerechtjes haal ik veel inspiratie uit Amerikaanse bronnen. Hun metingen zijn anders dan die van ons, namelijk in cups. 
-                        Ik heb mijzelf ook cups aangeschaft waardoor je in veel van mijn recepten deze metingen zal terugvinden. 
-                        Niet iedereen heeft dit in zijn/haar keuken, dus heb ik hier onder een tabelletje staan met de juiste omzettingen naar gram en ml. 
-                        (bron tabel: Libelle Lekker)
-                    </p>
-                    <p>
-                        Cups zijn erg handig om in huis te hebben! Als je even googelt naar 'maatcups' of 'maatschepjes' vind je een groot aanbod.
-                    </p>
-                    <img src="https://res.cloudinary.com/dszhpj8w6/image/upload/v1585233583/cupsnaargrammen_oisvpd_wx4k7f.png" />
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
-    </head>
-</html>
+
+{% block title %}Info{% endblock %}
+
+{% block content %}
+<div class="">
+    <div class="">
+        <p>
+            Voor mijn gerechtjes haal ik veel inspiratie uit Amerikaanse bronnen. Hun metingen zijn anders dan die van ons, namelijk in cups. 
+            Ik heb mijzelf ook cups aangeschaft waardoor je in veel van mijn recepten deze metingen zal terugvinden. 
+            Niet iedereen heeft dit in zijn/haar keuken, dus heb ik hier onder een tabelletje staan met de juiste omzettingen naar gram en ml. 
+            (bron tabel: Libelle Lekker)
+        </p>
+        <p>
+            Cups zijn erg handig om in huis te hebben! Als je even googelt naar 'maatcups' of 'maatschepjes' vind je een groot aanbod.
+        </p>
+        <img src="https://res.cloudinary.com/dszhpj8w6/image/upload/v1585233583/cupsnaargrammen_oisvpd_wx4k7f.png" />
+    </div>
+</div>
+{% endblock %}
