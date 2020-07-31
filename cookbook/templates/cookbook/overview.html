@@ -8,21 +8,21 @@
 
 {% block content %}
 <div x-data="data = overview()">
-    <form @submit.prevent="select_category()" class="mb-5 mt-0 md:flex md:justify-center md:w-3/4 md:mx-auto">
+    <form @submit.prevent="load()" class="mb-5 mt-0 md:flex md:justify-center md:w-3/4 md:mx-auto">
         {% for key, choice in category_choices %}
         <button @click="cat = {{ key }}; cat_name='{{choice}}'" class="md:px-5" x-bind:class="{'bg-gray-200': cat === {{key}}}">
             {{ choice }}
         </button>
         {% endfor %}
-        <button @click="cat = 'all'" class="md:px-5">
+        <button @click="cat = 0" class="md:px-5">
             Alles
         </button>
     </form>
-    <form @click.away="open = false" @submit.prevent="search()" class="flex flex-nowrap m-10 mt-5 justify-center items-center">
+    <form @click.away="open = false" @submit.prevent="load()" class="flex flex-nowrap m-10 mt-5 justify-center items-center">
         <button type="button" @click="activate()" class="flex-grow-0 flex-shrink-0 flex flex-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
-            <p class="ml-2" x-show="!successfullQuery & !open">Zoek<span x-show="cat !== 'all'" x-html="' in '+cat_name"></span></p>
-            <p class="ml-2" x-show="successfullQuery & !open" x-html="'Resultaten voor \''+query+'\''"></p>
+            <p class="ml-2" x-show="!finishedQuery & !open">Zoek<span x-show="cat != 0" x-html="' in '+cat_name"></span></p>
+            <p class="ml-2" x-show="finishedQuery & !open" x-html="'Resultaten voor \''+query+'\''"></p>
         </button>
         <div x-show="open" class="ml-2 flex-grow flex-shrink flex flex-nowrap items-center bg-gray-200">
             <input id="search" x-model="query" class="bg-transparent p-1 flex-grow flex-shrink">
@@ -40,10 +40,10 @@ function overview() {
     return {
         open: false,
         query: "",
-        cat: "all",
+        cat: 0,
         cat_name: "",
         isLoading: false,
-        successfullQuery: false,
+        finishedQuery: false,
         activate() {
             this.open = true
             this.$nextTick(() => {
@@ -55,39 +55,55 @@ function overview() {
             scope.$refs.recipes.innerHTML = data["html_from_view"]
             scope.isLoading = false
             scope.open = false
-            if (scope.query == '' | scope.cat=="all") {
-                scope.query = ''
-                scope.successfullQuery = false
+            if (scope.query == '') {
+                scope.finishedQuery = false
             } else {
-                scope.successfullQuery = true
+                scope.finishedQuery = true
             }
         },
-        search() {
+        load() {
             this.isLoading = true
 
-            if (this.cat === "all") {
-                url_query = "?q="+this.query
+            if ((this.cat > 0) | (this.query.length > 0)) {
+                url_query = "?"
+                if (this.cat > 0) {
+                    url_query = url_query+"cat="+this.cat
+                }
+                if (this.query.length > 0) {
+                    if (url_query.length > 1) {
+                        url_query = url_query+"&"
+                    }
+                    url_query = url_query+"q="+this.query
+                }
             } else {
-                url_query = "?q="+this.query+"&cat="+this.cat
+                url_query = ''
             }
 
             fetch(url_query, {headers: {'Content-Type': 'application/json'}})
                 .then(res => res.json())
                 .then(data => this.fill(this, data));
         },
-        select_category() {
-            this.isLoading = true
+        // select_category() {
+        //     this.isLoading = true
 
-            if (this.cat !== "all") {
-                url_query = "?cat="+this.cat
-            } else {
-                url_query = ""
-            }
+        //     if (this.cat !== "all") {
+        //         url_query = "?cat="+this.cat
+        //     } else {
+        //         url_query = ""
+        //     }
 
-            fetch(url_query, {headers: {'Content-Type': 'application/json'}})
-                .then(res => res.json())
-                .then(data => this.fill(this, data));
-        }
+        //     if (this.query.length > 0) {
+        //         if (url_query.length > 0) {
+        //             url_query = url_query+"&q="+this.query
+        //         } else {
+        //             url_query = "?query="+this.query
+        //         }
+        //     }
+
+        //     fetch(url_query, {headers: {'Content-Type': 'application/json'}})
+        //         .then(res => res.json())
+        //         .then(data => this.fill(this, data));
+        // }
     }
 }
 </script>

@@ -53,23 +53,28 @@ def info(request):
 
 def overview(request):
 
-    recipes = Recipe.objects.filter(published=True)
-    if "q" in request.GET:
-        query = request.GET["q"]
-        recipes = recipes.filter(title__icontains=query)
-    if "cat" in request.GET:
-        query = request.GET["cat"]
-        recipes = recipes.filter(meal_category__icontains=query)
-        
-    recipes = recipes.order_by('-date_published')
-
-    # if "q" in request.GET and "cat" in request.GET:
-    #     recipes = Recipe.objects.filter(title__icontains=query, published=True).order_by('-date_published')
-    # elif "cat" in request.GET:
+    # recipes = Recipe.objects.filter(published=True)
+    # if "q" in request.GET:
+    #     query = request.GET["q"]
+    #     recipes = recipes.filter(title__icontains=query)
+    # if "cat" in request.GET:
     #     query = request.GET["cat"]
     #     recipes = recipes.filter(meal_category__icontains=query)
-    # else:
-    #     recipes = Recipe.objects.filter(published=True).order_by('-date_published')
+        
+    # recipes = recipes.order_by('-date_published')
+
+    if "q" in request.GET and "cat" in request.GET:
+        query = request.GET["q"]
+        cat = request.GET["cat"]
+        recipes = Recipe.objects.filter(title__icontains=query, meal_category__icontains=cat, published=True).order_by('-date_published')
+    elif "cat" in request.GET:
+        query = request.GET["cat"]
+        recipes = Recipe.objects.filter(meal_category__icontains=query, published=True).order_by('-date_published')
+    elif "q" in request.GET:
+        query = request.GET["q"]
+        recipes = Recipe.objects.filter(title__icontains=query, published=True).order_by('-date_published')
+    else:
+        recipes = Recipe.objects.filter(published=True).order_by('-date_published')
 
     context = {
         "recipes": [recipe_to_context(recipe) for recipe in recipes],
