@@ -8,25 +8,25 @@
 
 {% block content %}
 <div x-data="data = overview()">
-    <form @submit.prevent="load()" class="mb-5 mt-0 md:flex md:justify-center md:w-3/4 md:mx-auto">
+    <form @submit.prevent="load()" class="text-lg mb-5 mt-0 flex justify-center md:w-3/4 mx-auto">
         {% for key, choice in category_choices %}
-        <button @click="cat = {{ key }}; cat_name='{{choice}}'" class="md:px-5" x-bind:class="{'bg-gray-200': cat === {{key}}}">
-            {{ choice }}
-        </button>
+            <button @click="cat = {{ key }}; cat_name='{{choice}}'" class="focus:outline-none focus:border-none font-black cursor-pointer rounded-full px-1 md:px-4" x-bind:class="{'bg-gray-200': cat === {{key}}}">
+                {{ choice }}
+            </button>
+            {% if key != 4 %}
+            <span class="m-1 md:m-2">&bull;</span>
+            {% endif %}
         {% endfor %}
-        <button @click="cat = 0" class="md:px-5">
-            Alles
-        </button>
     </form>
     <form @click.away="open = false" @submit.prevent="load()" class="flex flex-nowrap m-10 mt-5 justify-center items-center">
-        <button type="button" @click="activate()" class="flex-grow-0 flex-shrink-0 flex flex-nowrap">
+        <button type="button" @click="activate()" class="ffocus:outline-none focus:border-none lex-grow-0 flex-shrink-0 flex flex-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
             <p class="ml-2" x-show="!finishedQuery & !open">Zoek<span x-show="cat != 0" x-html="' in '+cat_name"></span></p>
             <p class="ml-2" x-show="finishedQuery & !open" x-html="'Resultaten voor \''+query+'\''"></p>
         </button>
         <div x-show="open" class="ml-2 flex-grow flex-shrink flex flex-nowrap items-center bg-gray-200">
             <input id="search" x-model="query" class="bg-transparent p-1 flex-grow flex-shrink">
-            <button type="submit" class="flex-grow-0 mr-3">
+            <button type="submit" class="flex-grow-0 mr-3 focus:outline-none focus:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg>
             </button>
         </div>

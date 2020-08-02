@@ -36,10 +36,12 @@ class Recipe(models.Model):
     BREAKFAST = 1
     LUNCH = 2
     DINNER = 3
+    DESSERT = 4
     CATEGORY_CHOICES = (
         (BREAKFAST, "Ontbijt"),
         (LUNCH, "Lunch"),
-        (DINNER, "Avondmaal")
+        (DINNER, "Avondmaal"),
+        (DESSERT, "Dessert")
     )
     meal_category = MultiSelectField(name="meal_category", choices=CATEGORY_CHOICES, null=True, blank=True) 
 
