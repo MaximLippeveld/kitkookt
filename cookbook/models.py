@@ -59,6 +59,11 @@ class Recipe(models.Model):
     def save(self, *args, **kwargs):
         if not self.url_title:
             self.url_title = list(filter(str.isalnum, self.title[:30]))
+
+        # remove trailing stuff
+        self.steps = self.steps[:self.steps.rfind("</p>")+4]
+        self.intro = self.intro[:self.intro.rfind("</p>")+4]
+        
         super(Recipe, self).save(*args, **kwargs)
 
     def __str__(self):
