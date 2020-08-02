@@ -82,28 +82,7 @@ function overview() {
             fetch(url_query, {headers: {'Content-Type': 'application/json'}})
                 .then(res => res.json())
                 .then(data => this.fill(this, data));
-        },
-        // select_category() {
-        //     this.isLoading = true
-
-        //     if (this.cat !== "all") {
-        //         url_query = "?cat="+this.cat
-        //     } else {
-        //         url_query = ""
-        //     }
-
-        //     if (this.query.length > 0) {
-        //         if (url_query.length > 0) {
-        //             url_query = url_query+"&q="+this.query
-        //         } else {
-        //             url_query = "?query="+this.query
-        //         }
-        //     }
-
-        //     fetch(url_query, {headers: {'Content-Type': 'application/json'}})
-        //         .then(res => res.json())
-        //         .then(data => this.fill(this, data));
-        // }
+        }
     }
 }
 </script>
