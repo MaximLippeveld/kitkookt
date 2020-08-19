@@ -18,6 +18,11 @@ def recipe_to_context(recipe):
     context = model_to_dict(recipe)
     context["diet"] = recipe.get_diet_display()
 
+    if len(context["meal_category"]) > 0:
+        context["category_display"] = Recipe.CATEGORY_CHOICES[int(context["meal_category"][0])][1]
+    else:
+        context["category_display"] = ""
+
     ingredientlists = []
     for ingredientlist in recipe.ingredientlists.all():
         ilc = model_to_dict(ingredientlist)
@@ -52,16 +57,6 @@ def info(request):
 
 
 def overview(request):
-
-    # recipes = Recipe.objects.filter(published=True)
-    # if "q" in request.GET:
-    #     query = request.GET["q"]
-    #     recipes = recipes.filter(title__icontains=query)
-    # if "cat" in request.GET:
-    #     query = request.GET["cat"]
-    #     recipes = recipes.filter(meal_category__icontains=query)
-        
-    # recipes = recipes.order_by('-date_published')
 
     if "q" in request.GET and "cat" in request.GET:
         query = request.GET["q"]

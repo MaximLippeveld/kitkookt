@@ -11,6 +11,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
         <title>Kit Kookt | {% block title %}{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="{% block description %}{% endblock %}"/>
+        {% block other_meta %}{% endblock %}
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161600221-1"></script>
@@ -26,7 +28,7 @@
             <div class="my-10 mx-auto w-1/2 text-center">
                 <div class="py-10 font-serif font-medium text-4xl border-b-4 border-black border-dotted">
                     <a href="/" >Kit Kookt</a>
-                    <a href="https://instagram.com/kitkookt" target="blank"><img class="w-8 mt-5 mx-auto" src="{% static 'instagram_glyph.png' %}" /></a>
+                    <a href="https://instagram.com/kitkookt" target="blank"><img alt="Instagram logo" class="w-8 mt-5 mx-auto" src="{% static 'instagram_glyph.png' %}" /></a>
                 </div>
             </div>
             <div class="font-sans">

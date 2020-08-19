@@ -6,6 +6,25 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+{% block other_meta %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org/",
+    "@type": "Recipe",
+    "name": "{{ title }}",
+    "image": [
+        {{ header_url }}
+    ],
+    "author": {
+        "@type": "Person",
+        "name": "Kit Kookt"
+    },
+    "description": "{{ intro|safe }}",
+    "recipyCategory": "{{ category_display }}"
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="block">
     {% include "cookbook/recipe-card.html" %}
