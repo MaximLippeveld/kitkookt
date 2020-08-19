@@ -18,10 +18,10 @@ def recipe_to_context(recipe):
     context = model_to_dict(recipe)
     context["diet"] = recipe.get_diet_display()
 
-    if len(context["meal_category"]) > 0:
-        context["category_display"] = Recipe.CATEGORY_CHOICES[int(context["meal_category"][0])][1]
-    else:
-        context["category_display"] = ""
+    # if len(context["meal_category"]) > 0:
+    #     context["category_display"] = Recipe.CATEGORY_CHOICES[int(context["meal_category"][0])][1]
+    # else:
+    #     context["category_display"] = ""
 
     ingredientlists = []
     for ingredientlist in recipe.ingredientlists.all():
