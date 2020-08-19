@@ -24,7 +24,10 @@
     <body>
         <div class="container max-w-screen-md mx-auto sm:px-10">
             <div class="my-10 mx-auto w-1/2 text-center">
-                <a href="/" class="block py-10 font-serif font-medium text-4xl border-b-4 border-black border-dotted">Kit Kookt</a>
+                <div class="py-10 font-serif font-medium text-4xl border-b-4 border-black border-dotted">
+                    <a href="/" >Kit Kookt</a>
+                    <a href="https://instagram.com/kitkookt" target="blank"><img class="w-8 mt-5 mx-auto" src="{% static 'instagram_glyph.png' %}" /></a>
+                </div>
             </div>
             <div class="font-sans">
                 {% block content %}(no content){% endblock %}
