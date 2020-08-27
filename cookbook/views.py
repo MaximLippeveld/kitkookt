@@ -58,18 +58,24 @@ def info(request):
 
 def overview(request):
 
-    if "q" in request.GET and "cat" in request.GET:
-        query = request.GET["q"]
-        cat = request.GET["cat"]
-        recipes = Recipe.objects.filter(title__icontains=query, meal_category__icontains=cat, published=True).order_by('-date_published')
-    elif "cat" in request.GET:
+    items_per_page = 10
+
+    recipes = Recipe.objects.filter(published=True).order_by('-date_published')
+    
+    if "cat" in request.GET:
         query = request.GET["cat"]
-        recipes = Recipe.objects.filter(meal_category__icontains=query, published=True).order_by('-date_published')
-    elif "q" in request.GET:
+        recipes = recipes.filter(meal_category__icontains=query)
+    if "q" in request.GET:
         query = request.GET["q"]
-        recipes = Recipe.objects.filter(title__icontains=query, published=True).order_by('-date_published')
+        recipes = recipes.filter(title__icontains=query)
+
+    if "page" in request.GET:
+        page = int(request.GET["page"])
     else:
-        recipes = Recipe.objects.filter(published=True).order_by('-date_published')
+        page = 1
+
+    end = page*items_per_page
+    recipes = recipes[:end]
 
     context = {
         "recipes": [recipe_to_context(recipe) for recipe in recipes],
@@ -82,7 +88,7 @@ def overview(request):
             context=context
         )
 
-        data_dict = {"html_from_view": html}
+        data_dict = {"html_from_view": html, "more_available": True}
         return JsonResponse(data=data_dict, safe=False)
 
     return render(request, "cookbook/overview.html", context)

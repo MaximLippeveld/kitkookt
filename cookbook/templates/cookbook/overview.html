@@ -11,7 +11,7 @@
 <div x-data="data = overview()">
     <form @submit.prevent="load()" class="text-lg mb-5 mt-0 flex justify-center md:w-3/4 mx-auto">
         {% for key, choice in category_choices %}
-            <button @click="cat = {{ key }}; cat_name='{{choice}}'" class="focus:outline-none focus:border-none font-black cursor-pointer rounded-full px-1 md:px-4" x-bind:class="{'bg-gray-200': cat === {{key}}}">
+            <button @click="cat = {{ key }}; cat_name='{{choice}}'; page=1" class="focus:outline-none focus:border-none font-black cursor-pointer rounded-full px-1 md:px-4" x-bind:class="{'bg-gray-200': cat === {{key}}}">
                 {{ choice }}
             </button>
             {% if key != 4 %}
@@ -32,8 +32,13 @@
             </button>
         </div>
     </form>
-    <div class="block" x-bind:class="{'opacity-50': isLoading}" x-ref="recipes">
+    <div class="block" x-bind:class="{'opacity-50': isLoading}">
+        <div x-ref="recipes">
         {% include "cookbook/recipe-list.html" %}
+        </div>
+        <button class="block mx-auto p-5 mb-3 active:bg-gray-200" x-show="moreAvailable" @click="page++;load()">
+            Meer recepten laden...
+        </button>
     </div>
 </div>
 <script type="text/javascript">
@@ -45,6 +50,8 @@ function overview() {
         cat_name: "",
         isLoading: false,
         finishedQuery: false,
+        moreAvailable: true,
+        page: 1,
         activate() {
             this.open = true
             this.$nextTick(() => {
@@ -61,25 +68,21 @@ function overview() {
             } else {
                 scope.finishedQuery = true
             }
+            scope.moreAvailable = data["more_available"]
         },
         load() {
             this.isLoading = true
 
-            if ((this.cat > 0) | (this.query.length > 0)) {
-                url_query = "?"
-                if (this.cat > 0) {
-                    url_query = url_query+"cat="+this.cat
-                }
-                if (this.query.length > 0) {
-                    if (url_query.length > 1) {
-                        url_query = url_query+"&"
-                    }
-                    url_query = url_query+"q="+this.query
-                }
-            } else {
-                url_query = ''
+            query_parts = ['page='+this.page]
+
+            if (this.cat > 0) {
+                query_parts.push("cat="+this.cat)
+            }
+            if (this.query.length > 0) {
+                query_parts.push("q="+this.query)
             }
 
+            url_query = "?" + query_parts.join("&")
             fetch(url_query, {headers: {'Content-Type': 'application/json'}})
                 .then(res => res.json())
                 .then(data => this.fill(this, data));
