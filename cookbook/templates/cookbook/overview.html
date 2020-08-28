@@ -27,7 +27,7 @@
         </button>
         <div x-show="open" class="ml-2 flex-grow flex-shrink flex flex-nowrap items-center bg-gray-200">
             <input id="search" x-model="query" class="bg-transparent p-1 flex-grow flex-shrink">
-            <button type="submit" class="flex-grow-0 mr-3 focus:outline-none focus:border-none">
+            <button type="submit" @click="page=1" class="flex-grow-0 mr-3 focus:outline-none focus:border-none">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg>
             </button>
         </div>

@@ -58,7 +58,7 @@ def info(request):
 
 def overview(request):
 
-    items_per_page = 10
+    items_per_page = 5
 
     recipes = Recipe.objects.filter(published=True).order_by('-date_published')
     
