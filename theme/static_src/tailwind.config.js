@@ -1,4 +1,10 @@
 module.exports = {
+  purge: [
+    // Templates within theme app (e.g. base.html)
+    '../templates/**/*.html',
+    // Templates in other apps
+    '../../templates/**/*.html',
+  ],
   prefix: '',
   important: false,
   separator: ':',
@@ -223,8 +229,8 @@ module.exports = {
       default: '1',
     },
     fontFamily: {
-      serif: ['Roboto Slab'],
-      sans: ['Montserrat']
+      serif: ['Roboto Slab', 'serif'],
+      sans: ['Montserrat', 'sans-serif']
     },
     fontSize: {
       xs: '0.75rem',
