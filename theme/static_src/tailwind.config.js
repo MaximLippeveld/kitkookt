@@ -1,10 +1,10 @@
 module.exports = {
-  purge: [
-    // Templates within theme app (e.g. base.html)
-    '../templates/**/*.html',
-    // Templates in other apps
-    '../../templates/**/*.html',
-  ],
+  purge: {
+    enabled: true,
+    content: [
+    '../../templates/**/*.html'
+    ]
+  },
   prefix: '',
   important: false,
   separator: ':',
