@@ -11,7 +11,7 @@ def tailwinds(value):
     soup = BeautifulSoup(value, "html.parser")
 
     for t in soup.find_all("p"):
-        t["class"] = "mb-4"
+        t["class"] = "mb-2"
     
     for t in soup.find_all(re.compile("h[123]")):
         t["class"] = "my-2 font-semibold text-xl"

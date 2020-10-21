@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest
 from django.forms.models import model_to_dict
 from image_cropping.utils import get_backend
 import urllib.request
 from django.conf import settings
 import os
+import random
+from collections import Counter
 
 from .models import Recipe
 
@@ -13,6 +15,7 @@ from django.core.files.storage import default_storage
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
+MAX_N = 10
 
 def recipe_to_context(recipe):
     context = model_to_dict(recipe)
@@ -58,24 +61,37 @@ def info(request):
 
 def overview(request):
 
-    items_per_page = 5
+    n_items = 5
+    recipes = Recipe.objects.filter(published=True)
 
-    recipes = Recipe.objects.filter(published=True).order_by('-date_published')
-    
-    if "cat" in request.GET:
-        query = request.GET["cat"]
-        recipes = recipes.filter(meal_category__icontains=query)
-    if "q" in request.GET:
-        query = request.GET["q"]
-        recipes = recipes.filter(title__icontains=query)
+    if "pk" in request.GET:
+        recipe = Recipe.objects.get(pk=request.GET["pk"])
 
-    if "page" in request.GET:
-        page = int(request.GET["page"])
+        # sample n_items random recipes
+        counts = Counter(random.choices(recipe.meal_category, k=n_items))
+        selected = Recipe.objects.none()
+        for k,v in counts.items():
+            q = recipes.filter(meal_category__icontains=k).exclude(pk=recipe.pk).all()
+            # n_avail = q.count()
+            selected |= q[:v]
+        recipes = selected
     else:
-        page = 1
+        recipes = recipes.order_by('-date_published')
+        
+        if "cat" in request.GET:
+            query = request.GET["cat"]
+            recipes = recipes.filter(meal_category__icontains=query)
+        if "q" in request.GET:
+            query = request.GET["q"]
+            recipes = recipes.filter(title__icontains=query)
 
-    end = page*items_per_page
-    recipes = recipes[:end]
+        if "page" in request.GET:
+            page = int(request.GET["page"])
+        else:
+            page = 1
+
+        end = page*n_items
+        recipes = recipes[:end]
 
     context = {
         "recipes": [recipe_to_context(recipe) for recipe in recipes],
