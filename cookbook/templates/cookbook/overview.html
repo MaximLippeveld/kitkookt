@@ -8,7 +8,7 @@
 {% block description %}Vind hopen inspiratie om vegan en veggie te koken. Neem een kijkje tussen de recepten voor heerlijk ontbijt, lunch, avondmaal of dessert!{% endblock %}
 
 {% block content %}
-<div x-data="data = overview()">
+<div x-data="data = overview()" x-on:scroll.window="scroll">
     <form @submit.prevent="load()" class="text-lg mb-5 mt-0 flex justify-center md:w-3/4 mx-auto">
         {% for key, choice in category_choices %}
             <button @click="cat = {{ key }}; cat_name='{{choice}}'; page=1" class="focus:outline-none focus:border-none font-black cursor-pointer rounded-full px-1 md:px-4" x-bind:class="{'bg-gray-200': cat === {{key}}}">
@@ -36,9 +36,6 @@
         <div x-ref="recipes">
         {% include "cookbook/recipe-list.html" %}
         </div>
-        <button class="block mx-auto p-5 mb-3 active:bg-gray-200" x-show="moreAvailable" @click="page++;load()">
-            Meer recepten laden...
-        </button>
     </div>
 </div>
 <script type="text/javascript">
@@ -52,6 +49,13 @@ function overview() {
         finishedQuery: false,
         moreAvailable: true,
         page: 1,
+        scroll() {
+            let bottom = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+            if (bottom) {
+                this.page++;
+                this.load();
+            }
+        },
         activate() {
             this.open = true
             this.$nextTick(() => {
