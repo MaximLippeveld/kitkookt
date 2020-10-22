@@ -50,10 +50,12 @@ function overview() {
         moreAvailable: true,
         page: 1,
         scroll() {
-            let bottom = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
-            if (bottom) {
-                this.page++;
-                this.load();
+            if (!this.isLoading) {
+                let bottom = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight
+                if (bottom) {
+                    this.page++;
+                    this.load();
+                }
             }
         },
         activate() {

@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'image_cropping',
     'tailwind',
     'theme',
-    'multiselectfield'
+    'multiselectfield',
+    'compressor'
 ]
 
 from easy_thumbnails.conf import Settings as thumbnail_settings
