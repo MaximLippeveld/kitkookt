@@ -71,9 +71,7 @@ def overview(request):
         counts = Counter(random.choices(recipe.meal_category, k=n_items))
         selected = Recipe.objects.none()
         for k,v in counts.items():
-            q = recipes.filter(meal_category__icontains=k).exclude(pk=recipe.pk).all()
-            # n_avail = q.count()
-            selected |= q[:v]
+            selected |= recipes.filter(meal_category__icontains=k).exclude(pk=recipe.pk).order_by('?')[:v]
         recipes = selected
     else:
         recipes = recipes.order_by('-date_published')
