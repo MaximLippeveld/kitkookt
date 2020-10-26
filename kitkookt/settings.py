@@ -29,6 +29,8 @@ DEBUG = os.environ["DEBUG"] == 'true'
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "kitkookt.be"]
 
+COMPRESS_ENABLED = True
+
 
 # Application definition
 
@@ -49,6 +51,12 @@ INSTALLED_APPS = [
     'multiselectfield',
     'compressor'
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
 
 from easy_thumbnails.conf import Settings as thumbnail_settings
 THUMBNAIL_PROCESSORS = (

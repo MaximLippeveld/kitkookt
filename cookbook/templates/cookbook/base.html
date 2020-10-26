@@ -1,12 +1,15 @@
 {% load static %}
 {% load cropping %}
 {% load fontawesome_5 %}
+{% load compress %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         {% fontawesome_5_static %}
+        {% compress css %}
         <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" type="text/css" charset="utf-8"/>
+        {% endcompress %}
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.svg' %}"/> 
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
         <title>Kit Kookt | {% block title %}{% endblock %}</title>
