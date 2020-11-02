@@ -1,30 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseBadRequest
 from django.forms.models import model_to_dict
-from image_cropping.utils import get_backend
-import urllib.request
-from django.conf import settings
-import os
 import random
 from collections import Counter
+import cloudinary
+import json
 
 from .models import Recipe
 
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
 MAX_N = 10
 
 def recipe_to_context(recipe):
-    context = model_to_dict(recipe)
+    context = model_to_dict(recipe, exclude=["image", "date_published"])
     context["diet"] = recipe.get_diet_display()
-
-    # if len(context["meal_category"]) > 0:
-    #     context["category_display"] = Recipe.CATEGORY_CHOICES[int(context["meal_category"][0])][1]
-    # else:
-    #     context["category_display"] = ""
 
     ingredientlists = []
     for ingredientlist in recipe.ingredientlists.all():
@@ -36,18 +27,11 @@ def recipe_to_context(recipe):
     context["icon_class"] = recipe.get_diet_display().lower()
 
     if recipe.image.url is not None:
-        img_new = os.path.join("recipe", os.path.basename(recipe.image.url))
-        if not default_storage.exists(img_new):
-            default_storage.save(img_new, ContentFile(urllib.request.urlopen(recipe.image.url).read()))
+        coords = [int(x) for x in recipe.cropping.split(",")]
 
-        context["header_url"] = get_backend().get_thumbnail_url(
-            img_new,
-            {
-                'size': (1000, 200),
-                'box': recipe.cropping,
-                'crop': True,
-                'detail': True,
-            }
+        context["header_url"] = recipe.image.image(transformation=
+            dict(x=coords[0], y=coords[1], width=coords[2]-coords[0], height=coords[3]-coords[1], crop="crop"),
+            client_hints = "true", quality = "auto"
         )
     else:
         context["header_url"] = False

@@ -32,12 +32,15 @@
         </div>
     </form>
     <div class="block" x-bind:class="{'opacity-50': isLoading}">
-        <div x-ref="recipes">
-        {% include "cookbook/recipe-list.html" %}
+        <div x-show="!hideFirst">
+            {% include "cookbook/recipe-list.html" %}
+        </div>
+        <div x-html="recipes">
         </div>
     </div>
 </div>
 <script type="text/javascript">
+
 function overview() {
     return {
         open: false,
@@ -47,7 +50,9 @@ function overview() {
         isLoading: false,
         finishedQuery: false,
         moreAvailable: true,
+        hideFirst: false,
         page: 1,
+        recipes: "",
         scroll() {
             if (!this.isLoading) {
                 let bottom = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight
@@ -64,16 +69,22 @@ function overview() {
                 document.getElementById("search").select()
             })
         },
-        fill(scope, data) {
-            scope.$refs.recipes.innerHTML = data["html_from_view"]
-            scope.isLoading = false
-            scope.open = false
-            if (scope.query == '') {
-                scope.finishedQuery = false
-            } else {
-                scope.finishedQuery = true
+        fill(data) {
+            this.recipes = data["html_from_view"]
+            this.moreAvailable = data["more_available"]
+
+            if (!this.hideFirst) {
+                this.hideFirst = true
             }
-            scope.moreAvailable = data["more_available"]
+
+            this.isLoading = false
+            this.open = false
+            
+            if (this.query == '') {
+                this.finishedQuery = false
+            } else {
+                this.finishedQuery = true
+            }
         },
         load() {
             this.isLoading = true
@@ -90,7 +101,7 @@ function overview() {
             url_query = "?" + query_parts.join("&")
             fetch(url_query, {headers: {'Content-Type': 'application/json'}})
                 .then(res => res.json())
-                .then(data => this.fill(this, data));
+                .then(data => this.fill(data));
         }
     }
 }

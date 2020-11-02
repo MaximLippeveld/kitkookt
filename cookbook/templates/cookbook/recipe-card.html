@@ -1,7 +1,8 @@
 
 <a class="block mb-3" href="{% url 'cookbook:recipe' url_title %}">
     {% if header_url %}
-        <img alt="Foto van {{ title }}" src="{{ header_url }}" class="w-full" />
+        <!-- <img data-src="{{ header_url|safe }}" class="w-full cld-responsive"> -->
+        {{ header_url | safe }}
     {% endif %}
     <p class="font-serif leading-snug p-2 text-xl">
         <span class="text-gray-600">{{ diet }}</span>
