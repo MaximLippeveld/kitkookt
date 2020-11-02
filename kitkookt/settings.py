@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cookbook',
-    'fontawesome_5',
     'ckeditor',
     'easy_thumbnails',
     'image_cropping',

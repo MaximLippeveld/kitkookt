@@ -1,5 +1,4 @@
 from django.db import models
-from fontawesome_5.fields import IconField
 from ckeditor.fields import RichTextField
 from image_cropping import ImageRatioField
 from cloudinary import models as cl_models
@@ -26,7 +25,6 @@ class Recipe(models.Model):
     intro = RichTextField(name="intro")
     title = models.TextField(name="title")
     steps = RichTextField(name="steps")
-    icon = IconField(default="seedling")
     image = cl_models.CloudinaryField(blank=True, name="image")
     cropping = ImageRatioField('image', '1000x200') 
     published = models.BooleanField(name='published', default=False)
