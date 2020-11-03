@@ -7,10 +7,10 @@
 {% block description %}Vind hopen inspiratie om vegan en veggie te koken. Neem een kijkje tussen de recepten voor heerlijk ontbijt, lunch, avondmaal of dessert!{% endblock %}
 
 {% block content %}
-<div x-data="data = overview()" @scroll.window="scroll()">
+<div x-data="data = overview()" @load.window="ready()" @scroll.window="scroll()">
     <form @submit.prevent="load()" class="text-lg mb-5 mt-0 flex justify-center md:w-3/4 mx-auto">
         {% for key, choice in category_choices %}
-            <button @click="cat = {{ key }}; cat_name='{{choice}}'; page=1" class="focus:outline-none focus:border-none font-black cursor-pointer rounded-full px-1 md:px-4" x-bind:class="{'bg-gray-200': cat === {{key}}}">
+            <button @click="cat = '{{ key }}'; cat_name = '{{choice}}'; page = 1; $refs.recipes.innerHTML = ''" class="focus:outline-none focus:border-none font-black cursor-pointer rounded-full px-1 md:px-4" x-bind:class="{'bg-gray-200': cat === '{{key}}'}">
                 {{ choice }}
             </button>
             {% if key != 4 %}
@@ -32,17 +32,15 @@
         </div>
     </form>
     <div class="block" x-bind:class="{'opacity-50': isLoading}">
-        <div x-show="!hideFirst">
-            {% include "cookbook/recipe-list.html" %}
-        </div>
-        <div x-html="recipes">
-        </div>
+        <div x-ref="recipes">{% include "cookbook/recipe-list.html" %}</div>
     </div>
+    <p>Loading</p>
 </div>
 <script type="text/javascript">
 
 function overview() {
     return {
+        cl: null,
         open: false,
         query: "",
         cat: 0,
@@ -50,15 +48,17 @@ function overview() {
         isLoading: false,
         finishedQuery: false,
         moreAvailable: true,
-        hideFirst: false,
         page: 1,
-        recipes: "",
+        ready() {
+            this.cl = cloudinary.Cloudinary.new({cloud_name: "kitkookt"})
+            this.$nextTick(() => this.cl.responsive())
+        },
         scroll() {
             if (!this.isLoading) {
                 let bottom = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight
                 if (bottom) {
-                    this.page++;
-                    this.load();
+                    this.page++
+                    this.load()
                 }
             }
         },
@@ -70,7 +70,7 @@ function overview() {
             })
         },
         fill(data) {
-            this.recipes = data["html_from_view"]
+            this.$refs.recipes.innerHTML += data["html_from_view"]
             this.moreAvailable = data["more_available"]
 
             if (!this.hideFirst) {
@@ -85,6 +85,8 @@ function overview() {
             } else {
                 this.finishedQuery = true
             }
+
+            this.$nextTick(() => this.cl.responsive())
         },
         load() {
             this.isLoading = true

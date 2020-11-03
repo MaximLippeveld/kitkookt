@@ -30,9 +30,11 @@ def recipe_to_context(recipe):
         coords = [int(x) for x in recipe.cropping.split(",")]
 
         context["header_url"] = recipe.image.image(transformation=
-            dict(x=coords[0], y=coords[1], width=coords[2]-coords[0], height=coords[3]-coords[1], crop="crop"),
-            client_hints = "true", quality = "auto", secure=True
+                dict(x=coords[0], y=coords[1], width=coords[2]-coords[0], height=coords[3]-coords[1], crop="crop"),
+                width = "auto", dpr = "auto", crop = "scale", responsive = "true", responsive_placeholder = "blank", secure=True
         )
+
+        cloudinary.CloudinaryImage()
     else:
         context["header_url"] = False
 
@@ -72,8 +74,7 @@ def overview(request):
         else:
             page = 1
 
-        end = page*n_items
-        recipes = recipes[:end]
+        recipes = recipes[(page-1)*n_items:page*n_items]
 
     context = {
         "recipes": [recipe_to_context(recipe) for recipe in recipes],

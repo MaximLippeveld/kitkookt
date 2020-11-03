@@ -61,11 +61,18 @@
 <script type="text/javascript">
 function detail() {
     return {
+        cl: null,
         recipes: "",
         load(pk) {
+            this.cl = cloudinary.Cloudinary.new({cloud_name: "kitkookt"})
+            this.$nextTick(() => this.cl.responsive())
+            
             fetch('/recepten?pk='+pk, {headers: {'Content-Type': 'application/json'}})
                 .then(res => res.json())
-                .then(data => this.recipes = data["html_from_view"]);
+                .then(data => {
+                    this.recipes = data["html_from_view"]
+                    this.$nextTick(() => this.cl.responsive())
+                });
         }
     }
 }
