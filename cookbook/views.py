@@ -31,7 +31,7 @@ def recipe_to_context(recipe):
 
         context["header_url"] = recipe.image.image(transformation=
                 dict(x=coords[0], y=coords[1], width=coords[2]-coords[0], height=coords[3]-coords[1], crop="crop"),
-                width = "auto", dpr = "auto", crop = "scale", responsive = "true", responsive_placeholder = "blank", secure=True
+                width = "auto", dpr = "auto", crop = "scale", responsive = "true", responsive_placeholder = "blank", secure=True, quality=100
         )
 
         cloudinary.CloudinaryImage()
