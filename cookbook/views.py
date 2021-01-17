@@ -10,6 +10,7 @@ from .models import Recipe
 
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 MAX_N = 10
 
@@ -69,16 +70,14 @@ def overview(request):
             query = request.GET["q"]
             recipes = recipes.filter(title__icontains=query)
 
-        if "page" in request.GET:
-            page = int(request.GET["page"])
-        else:
-            page = 1
-
-        recipes = recipes[(page-1)*n_items:page*n_items]
+    paginator = Paginator(recipes, n_items)
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        "recipes": [recipe_to_context(recipe) for recipe in recipes],
-        "category_choices": Recipe.CATEGORY_CHOICES
+        "recipes": [recipe_to_context(recipe) for recipe in page_obj],
+        "category_choices": Recipe.CATEGORY_CHOICES,
+        "more_available": json.dumps(page_obj.has_next())
     }
 
     if request.content_type == 'application/json':    
@@ -87,7 +86,10 @@ def overview(request):
             context=context
         )
 
-        data_dict = {"html_from_view": html, "more_available": True}
+        if (not page_obj.has_next()):
+            print("no!")
+
+        data_dict = {"html_from_view": html, "more_available": page_obj.has_next()}
         return JsonResponse(data=data_dict, safe=False)
 
     return render(request, "cookbook/overview.html", context)
