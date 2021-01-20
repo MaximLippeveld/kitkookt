@@ -138,8 +138,15 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 import cloudinary
+import yaml
+with open("cloudinary_config.yml") as y:
+    config = yaml.load(y)
+    cl_api_key = config["cl_api_key"]
+    cl_api_secret = config["cl_api_secret"]
 cloudinary.config(
-    cloud_name="kitkookt"
+    cloud_name="kitkookt",
+    api_key=cl_api_key,
+    api_secret=cl_api_secret
 )
 
 TAILWIND_APP_NAME = 'theme'

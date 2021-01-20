@@ -7,3 +7,4 @@ media/
 static/
 staticfiles
 venv
+cloudinary_config.yml

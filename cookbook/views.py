@@ -86,9 +86,6 @@ def overview(request):
             context=context
         )
 
-        if (not page_obj.has_next()):
-            print("no!")
-
         data_dict = {"html_from_view": html, "more_available": page_obj.has_next()}
         return JsonResponse(data=data_dict, safe=False)
 
