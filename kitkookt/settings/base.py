@@ -140,7 +140,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 import cloudinary
 import yaml
 with open("cloudinary_config.yml") as y:
-    config = yaml.load(y)
+    config = yaml.load(y, Loader=yaml.FullLoader)
     cl_api_key = config["cl_api_key"]
     cl_api_secret = config["cl_api_secret"]
 cloudinary.config(
