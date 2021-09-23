@@ -1,1 +1,1 @@
-docker run --rm -it -p 8888:8888 --env PORT=8888 kitkookt
+docker run --rm -it -p 8888:8888 --env PORT=8888 --env DEBUG=$1 kitkookt
