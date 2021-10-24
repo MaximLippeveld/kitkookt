@@ -1,0 +1,14 @@
+{
+    "name": "Kit Kookt",
+    "version": "0.0.1",
+    "slug": "kitkookt",
+    "description": "Kit Kookt Django website",
+    "arch": ["armv7", "armv8"],
+    "startup": "application",
+    "boot": "auto",
+    "options": {},
+    "schema": {},
+    "ports": {
+        "7000/tcp": 7000
+    }
+}
