@@ -1,9 +1,8 @@
-FROM node:latest
+ARG BUILD_ARG
 
-ENV PYTHONUNBUFFERED TRUE
+FROM ${BUILD_ARG}
 
-RUN apt-get update
-RUN apt-get install -y git gcc python3-pip
+RUN apk add --update nodejs npm
 
 ENV APP_HOME /app
 WORKDIR ${APP_HOME}
@@ -13,8 +12,5 @@ RUN pip3 install -r requirements.txt
 
 COPY . ./
 
-ENV DEBUG TRUE
 RUN python3 manage.py tailwind build
 RUN python3 manage.py collectstatic
-
-CMD ["./scripts/entrypoint.sh"]
