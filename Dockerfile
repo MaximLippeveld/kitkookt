@@ -14,5 +14,9 @@ RUN pip install -r requirements.txt
 
 COPY . ./
 
-RUN python manage.py tailwind build
+RUN python manage.py migrate --no-input
+RUN python manage.py tailwind build --no-input
 RUN python manage.py collectstatic
+
+RUN chmod a+x run.sh
+CMD [ "/app/run.sh" ]
