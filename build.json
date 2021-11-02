@@ -2,11 +2,11 @@
     "image": "homeassistant/{arch}-base-python",
     "shadow_repository": "ghcr.io/home-assistant",
     "build_from": {
-        "aarch64": "homeassistant/aarch64-base:",
-        "armv7": "homeassistant/armv7-base:",
-        "armhf": "homeassistant/armhf-base:",
-        "amd64": "homeassistant/amd64-base:",
-        "i386": "homeassistant/i386-base:"
+        "aarch64": "homeassistant/aarch64-base-python:latest",
+        "armv7": "homeassistant/armv7-base-python:latest",
+        "armhf": "homeassistant/armhf-base-python:latest",
+        "amd64": "homeassistant/amd64-base-python:latest",
+        "i386": "homeassistant/i386-base-python:latest"
     },
     "args": {
         "PYTHON_VERSION": "3.9.7",
