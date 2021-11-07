@@ -4,6 +4,7 @@
     "slug": "kitkookt",
     "description": "Kit Kookt Django website",
     "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
+    "image": "maximlippeveld/kitkookt-addon-{arch}",
     "startup": "application",
     "boot": "auto",
     "options": {},
