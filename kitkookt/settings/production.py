@@ -1,4 +1,3 @@
-SECRET_KEY = "_%!)ka%-khg!ckm6o$%2(0zcsn$@th%@gnm!q**@ozaq5*&((e"
 from .base import *
 import os
 
