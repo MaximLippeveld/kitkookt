@@ -138,11 +138,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 import cloudinary
-import yaml
-with open("cloudinary_config.yml") as y:
-    config = yaml.load(y, Loader=yaml.FullLoader)
-    cl_api_key = config["cl_api_key"]
-    cl_api_secret = config["cl_api_secret"]
+
+if os.path.exists("cloudinary_config.yml"):
+    import yaml
+    with open("cloudinary_config.yml") as y:
+        config = yaml.load(y, Loader=yaml.FullLoader)
+        cl_api_key = config["cl_api_key"]
+        cl_api_secret = config["cl_api_secret"]
+else:
+    cl_api_key = os.environ["CL_API_KEY"]
+    cl_api_secret = os.environ["CL_API_SECRET"]
+
 cloudinary.config(
     cloud_name="kitkookt",
     api_key=cl_api_key,

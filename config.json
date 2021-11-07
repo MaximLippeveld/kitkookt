@@ -7,8 +7,14 @@
     "image": "maximlippeveld/kitkookt-addon-{arch}",
     "startup": "application",
     "boot": "auto",
-    "options": {},
-    "schema": {},
+    "options": {
+        "cl_api_key": "key",
+        "cl_api_secret": "secret"
+    },
+    "schema": {
+        "cl_api_key": "str",
+        "cl_api_secret": "str"
+    },
     "ports": {
         "7001/tcp": 7001
     }
