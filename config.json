@@ -6,14 +6,18 @@
     "arch": ["aarch64", "amd64", "armhf", "armv7", "i386"],
     "image": "maximlippeveld/kitkookt-addon-{arch}",
     "startup": "application",
-    "boot": "auto",
+    "boot": "manual",
     "options": {
-        "cl_api_key": "key",
-        "cl_api_secret": "secret"
+        "cl_api_key": "key123",
+        "cl_api_secret": "secret123",
+        "django_secret_key": "secret123",
+        "debug": true
     },
     "schema": {
         "cl_api_key": "str",
-        "cl_api_secret": "str"
+        "cl_api_secret": "str",
+        "django_secret_key": "str",
+        "debug": "bool"
     },
     "ports": {
         "7001/tcp": 7001
